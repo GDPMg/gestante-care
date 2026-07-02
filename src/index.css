@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: Georgia, 'Times New Roman', serif;
+
+  --color-brand-cream: #f1ede4;
+  --color-brand-ink: #2f2b26;
+  --color-brand-muted: #8c8579;
+  --color-brand-border: #e2ddd0;
+  --color-brand-green: #5c8368;
+  --color-brand-green-dark: #4a6b54;
+  --color-brand-green-tint: #e3ebe1;
+  --color-brand-gold: #d8b776;
+}
+
+body {
+  background-color: var(--color-brand-cream);
+}
