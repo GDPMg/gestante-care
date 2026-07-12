@@ -23,9 +23,10 @@ durante esse período e ajudando a passar por todo o processo de maneira mais
 organizada e fácil, sem ansiedade de "o que vem agora".
 
 ## MVP
-Telas iniciais de login e cadastro (com coleta de dado gestacional mínimo —
-DUM ou DPP — para calcular a semana gestacional). Após cadastro, a gestante
-entra na Home. As demais telas do MVP são: Jornada, Serviços e Perfil.
+Telas iniciais de login e cadastro. No cadastro, a gestante informa a **semana
+gestacional atual** (selecionada em uma lista), e o app **calcula
+automaticamente a previsão de parto (DPP)** a partir disso. Após cadastro, a
+gestante entra na Home. As demais telas do MVP são: Jornada, Serviços e Perfil.
 
 Pontos importantes do escopo do MVP:
 - **Serviços é uma vitrine informativa**: mostra ultrassom, suplementos e
@@ -36,6 +37,9 @@ Pontos importantes do escopo do MVP:
   a política de privacidade antes de concluir o cadastro.
 - **Painel Admin simples**: para o time interno cadastrar/editar clínicas,
   produtos e cursos exibidos na vitrine, sem precisar mexer direto no banco.
+- **Login no MVP é só por e-mail e senha**: as opções de entrar por CPF ou
+  telefone foram deixadas de fora por decisão de escopo, para simplificar a
+  autenticação. Podem ser adicionadas em fase futura.
 
 As telas de UI/UX já foram desenhadas antes deste refinamento. Os elementos
 novos descritos abaixo (consentimento, disclaimer, "tenho interesse" no lugar
@@ -46,24 +50,29 @@ possível — não é para recriar as telas do zero.
 ## Telas
 1. Landing page
 2. Login
-3. Cadastro (+ etapa de dado gestacional: DUM ou DPP)
+3. Cadastro (+ etapa de dado gestacional: seleção da semana atual)
 4. Consentimento/Termos de uso e Política de Privacidade (bloqueia o cadastro
    até o aceite explícito)
 5. Home
-6. Tela da Jornada (calendário, semana gestacional calculada a partir da DUM/DPP)
+6. Tela da Jornada (calendário, semana gestacional informada e DPP calculada
+   automaticamente a partir dela)
 7. Tela Serviços (vitrine — ultrassom, suplementos, cursos)
 8. Tela de detalhe do serviço + "tenho interesse" (lead — substitui checkout
    real por enquanto)
 9. Perfil/configurações (+ acesso à política de privacidade e opção de excluir
    conta/dados, exigido pela LGPD)
-10. Recuperação de senha
-11. Painel Admin (backoffice): login separado, CRUD simples de clínicas,
+10. Recuperação de senha (solicitar link por e-mail)
+11. Redefinição de senha (criar nova senha a partir do link recebido)
+12. Painel Admin (backoffice): login separado, CRUD simples de clínicas,
     produtos/suplementos e cursos
 
 ## Entidades principais
 - **Usuário** (conta: email, senha com hash, tipo: gestante | admin)
-- **PerfilGestacional** (1:1 com Usuário gestante — DUM, DPP, semana gestacional
-  atual calculada)
+- **Perfil** (dados pessoais da gestante — nome completo, CPF, data de
+  nascimento, telefone)
+- **PerfilGestacional** (1:1 com Usuário gestante — semana gestacional atual
+  informada pela usuária, e previsão de parto (DPP) calculada automaticamente
+  a partir dela)
 - **Consulta** (agendada manualmente pela gestante — data, tipo, status)
 - **Exame** (similar à consulta — data, tipo, status)
 - **Servico** (tipo: ultrassom | suplemento | curso; descrição, preço exibido,
