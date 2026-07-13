@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import Button from '../components/Button'
 import TextField from '../components/TextField'
+import AuthLayout from '../components/AuthLayout'
 import { supabase } from '../lib/supabaseClient'
 import { translateAuthError } from '../lib/authErrors'
 
@@ -29,7 +30,8 @@ export default function Login() {
   }
 
   return (
-    <div className="mx-auto flex min-h-svh max-w-md flex-col gap-6 px-6 py-8">
+    <AuthLayout>
+    <div className="mx-auto flex min-h-svh max-w-md flex-col gap-6 px-6 py-8 lg:justify-center">
       <button
         onClick={() => navigate('/')}
         className="flex w-fit items-center gap-1 text-sm font-medium text-brand-green"
@@ -87,5 +89,6 @@ export default function Login() {
         </p>
       </div>
     </div>
+    </AuthLayout>
   )
 }

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Button from '../components/Button'
 import TextField from '../components/TextField'
+import AuthLayout from '../components/AuthLayout'
 import { supabase } from '../lib/supabaseClient'
 import { translateAuthError } from '../lib/authErrors'
 
@@ -37,7 +38,8 @@ export default function RedefinirSenha() {
   }
 
   return (
-    <div className="mx-auto flex min-h-svh max-w-md flex-col gap-6 px-6 py-8">
+    <AuthLayout>
+    <div className="mx-auto flex min-h-svh max-w-md flex-col gap-6 px-6 py-8 lg:justify-center">
       <div>
         <h1 className="font-serif text-3xl text-brand-ink">Crie uma nova senha</h1>
         <p className="mt-1 text-brand-muted">Escolha uma senha nova para acessar sua conta.</p>
@@ -65,5 +67,6 @@ export default function RedefinirSenha() {
         {submitting ? 'Salvando...' : 'Salvar nova senha'}
       </Button>
     </div>
+    </AuthLayout>
   )
 }

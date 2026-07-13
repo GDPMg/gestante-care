@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Button from '../components/Button'
 import TextField from '../components/TextField'
+import AuthLayout from '../components/AuthLayout'
 import { supabase } from '../lib/supabaseClient'
 import { translateAuthError } from '../lib/authErrors'
 
@@ -35,6 +36,7 @@ export default function RecuperarSenha() {
 
   if (enviado) {
     return (
+      <AuthLayout>
       <div className="mx-auto flex min-h-svh max-w-md flex-col justify-center gap-6 px-6 py-8 text-center">
         <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-brand-green-tint">
           <svg viewBox="0 0 24 24" className="h-8 w-8 text-brand-green" fill="none" stroke="currentColor" strokeWidth="2">
@@ -53,11 +55,13 @@ export default function RecuperarSenha() {
 
         <Button onClick={() => navigate('/login')}>Voltar para o login</Button>
       </div>
+      </AuthLayout>
     )
   }
 
   return (
-    <div className="mx-auto flex min-h-svh max-w-md flex-col gap-6 px-6 py-8">
+    <AuthLayout>
+    <div className="mx-auto flex min-h-svh max-w-md flex-col gap-6 px-6 py-8 lg:justify-center">
       <button
         onClick={() => navigate('/login')}
         className="flex w-fit items-center gap-1 text-sm font-medium text-brand-green"
@@ -87,5 +91,6 @@ export default function RecuperarSenha() {
         {submitting ? 'Enviando...' : 'Enviar link de recuperação'}
       </Button>
     </div>
+    </AuthLayout>
   )
 }
