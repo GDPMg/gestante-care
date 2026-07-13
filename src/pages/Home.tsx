@@ -70,7 +70,10 @@ export default function Home() {
           >
             🙂
           </button>
-          <button className="relative flex h-11 w-11 items-center justify-center rounded-2xl border border-brand-border bg-white text-lg">
+          <button
+            onClick={() => navigate('/notificacoes')}
+            className="relative flex h-11 w-11 items-center justify-center rounded-2xl border border-brand-border bg-white text-lg"
+          >
             🔔
             <span className="absolute top-2 right-2.5 h-2 w-2 rounded-full bg-red-500" />
           </button>
@@ -79,7 +82,10 @@ export default function Home() {
 
       <div className="flex flex-col gap-5 lg:grid lg:grid-cols-2 lg:gap-4">
         {semanaAtual && (
-          <button className="flex items-center gap-4 rounded-3xl bg-brand-green-tint p-4 text-left">
+          <button
+            onClick={() => navigate('/semana-gestacional')}
+            className="flex items-center gap-4 rounded-3xl bg-brand-green-tint p-4 text-left"
+          >
             <GestationRing semana={semanaAtual} />
             <div className="flex-1">
               <p className="text-xs font-semibold tracking-wide text-brand-green">SUA GESTAÇÃO</p>

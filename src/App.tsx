@@ -5,6 +5,7 @@ import Cadastro from './pages/Cadastro'
 import Consentimento from './pages/Consentimento'
 import Home from './pages/Home'
 import SemanaGestacional from './pages/SemanaGestacional'
+import Notificacoes from './pages/Notificacoes'
 import Jornada from './pages/Jornada'
 import Servicos from './pages/Servicos'
 import ServicoDetalhe from './pages/ServicoDetalhe'
@@ -25,6 +26,7 @@ export default function App() {
         <Route path="/redefinir-senha" element={<RedefinirSenha />} />
         <Route path="/home" element={<Home />} />
         <Route path="/semana-gestacional" element={<SemanaGestacional />} />
+        <Route path="/notificacoes" element={<Notificacoes />} />
         <Route path="/jornada" element={<Jornada />} />
         <Route path="/servicos" element={<Servicos />} />
         <Route path="/servicos/:id" element={<ServicoDetalhe />} />
