@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom'
-import { ITENS } from './navIcons'
+import { isNavItemAtivo, ITENS } from './navIcons'
 
 export default function TopNav() {
   const location = useLocation()
@@ -11,7 +11,7 @@ export default function TopNav() {
         <span className="font-serif text-xl text-brand-ink">Gestante Care</span>
         <div className="flex items-center gap-8">
           {ITENS.map(({ path, label, Icon }) => {
-            const ativo = location.pathname === path
+            const ativo = isNavItemAtivo(path, location.pathname)
             return (
               <button
                 key={path}
