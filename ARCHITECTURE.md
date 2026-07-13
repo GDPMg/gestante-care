@@ -14,6 +14,13 @@ dados.
   Escolhido em vez de um backend próprio para acelerar o MVP — auth pronta,
   banco relacional (que combina com as entidades do spec) e plano gratuito
   suficiente para essa fase.
+- **PWA**: `vite-plugin-pwa` gera o manifest (`manifest.webmanifest`) e o
+  service worker automaticamente no build. Ícone em
+  `public/icons/icon-192.png` / `icon-512.png` (+ `public/apple-touch-icon.png`
+  pro iOS) — reaproveita o coração da marca em fundo verde-sálvia sólido.
+  Requer HTTPS pra funcionar em produção (o Vercel já fornece isso). O service
+  worker só é gerado no build de produção (`npm run build` + `npm run
+  preview`), não aparece rodando em `npm run dev`.
 
 ## Estrutura de pastas
 
