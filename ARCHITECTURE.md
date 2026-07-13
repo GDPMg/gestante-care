@@ -64,7 +64,9 @@ Três tabelas (schema completo em `supabase/schema.sql`):
   `data_nascimento`, `telefone`.
 - **`perfil_gestacional`** — `usuario_id` (FK), `semana_informada`,
   `dpp_estimada` (calculada no frontend a partir da semana, ver
-  `lib/format.ts#calculateDueDate`).
+  `lib/format.ts#calculateDueDate`), `dpp_confirmada` (nullable — data real
+  informada pela usuária na tela Perfil, separada da estimativa automática;
+  começa em branco).
 - **`consentimentos_lgpd`** — `usuario_id` (FK), `versao_termos`,
   `aceito_em`.
 

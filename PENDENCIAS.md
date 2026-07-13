@@ -107,3 +107,25 @@ Vai crescendo conforme novas telas forem construídas.
 17. **Sem imagem real por serviço na tela de detalhe** — mesmo placeholder
     (ícone de coração) usado em todos, mesma situação já registrada pra
     Semana Gestacional.
+
+## Perfil (`/perfil`)
+
+18. **Upload de foto de perfil não é funcional** — o botão de editar (lápis)
+    aparece, mas ainda não faz nada. A "foto" hoje é sempre a inicial do
+    nome num círculo verde.
+
+19. **"Editar perfil" sem destino definido** — link visível abaixo do nome,
+    ainda sem navegação/comportamento.
+
+20. **Os 4 itens de "Configurações" (Conta, Segurança, Termos e
+    privacidade, Ajuda e suporte) não levam a lugar nenhum** — só visual
+    por enquanto, aguardando o usuário explicar o que cada um deve fazer.
+
+21. **"Informar fim da gestação" sem comportamento definido** — link
+    visível, sem ação ao tocar.
+
+O que **já funciona de verdade** nesta tela (testado ponta a ponta): editar
+e salvar a data prevista do parto (`dpp_confirmada`, nova coluna em
+`perfil_gestacional`), editar a semana gestacional inline (reaproveitando o
+`SelectField` do Cadastro), e "Sair da conta" (encerra a sessão e volta pro
+Login).
