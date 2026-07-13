@@ -4,6 +4,7 @@ import Button from '../components/Button'
 import TextField from '../components/TextField'
 import SelectField from '../components/SelectField'
 import StepProgress from '../components/StepProgress'
+import AuthLayout from '../components/AuthLayout'
 import {
   calculateDueDate,
   formatBirthDate,
@@ -139,7 +140,8 @@ export default function Cadastro() {
   }
 
   return (
-    <div className="mx-auto flex min-h-svh max-w-md flex-col gap-6 px-6 py-8">
+    <AuthLayout>
+    <div className="mx-auto flex min-h-svh max-w-md flex-col gap-6 px-6 py-8 lg:justify-center">
       <button
         onClick={handleVoltar}
         className="flex w-fit items-center gap-1 text-sm font-medium text-brand-green"
@@ -288,5 +290,6 @@ export default function Cadastro() {
         </div>
       )}
     </div>
+    </AuthLayout>
   )
 }

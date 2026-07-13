@@ -46,3 +46,27 @@ export const perfilGestacionalMock = {
   dum: '2026-01-15',
   semanaAtual: 24,
 }
+
+// Conteúdo do banner de destaque da Home. Muda com frequência (ofertas,
+// campanhas), por isso fica isolado aqui em vez de hardcoded na página.
+export const ofertaDestaqueMock = {
+  tag: 'Oferta da semana',
+  titulo: 'Curso de gestante com 20% de desconto',
+  descricao: 'Garanta sua vaga nas turmas de julho e prepare-se com tranquilidade para o parto.',
+  botao: 'Ver oferta',
+}
+
+// Sem controle real de agenda ainda (ver PRODUCT_SPEC.md), então a Home
+// mostra um conteúdo padrão em vez de dados de um backend de agendamento.
+export const proximaConsultaMock = {
+  dia: '22',
+  mes: 'JUN',
+  tipo: 'Pré-natal',
+  horario: '14:30',
+  selo: 'Hoje',
+}
+
+export const proximoExameMock = {
+  nome: 'Ultrassom morfológico',
+  status: 'A agendar',
+}
