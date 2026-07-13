@@ -39,3 +39,13 @@ export const ITENS = [
   { path: '/servicos', label: 'Serviços', Icon: ServicosIcon },
   { path: '/perfil', label: 'Perfil', Icon: PerfilIcon },
 ]
+
+// Rotas que não são a Home em si, mas são acessadas a partir dela e devem
+// manter o item "Início" destacado na navegação (ex: detalhe da semana
+// gestacional).
+const SUB_ROTAS_INICIO = ['/semana-gestacional']
+
+export function isNavItemAtivo(path: string, pathname: string) {
+  if (path === '/home') return pathname === '/home' || SUB_ROTAS_INICIO.includes(pathname)
+  return pathname === path
+}

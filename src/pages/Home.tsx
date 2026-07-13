@@ -64,7 +64,10 @@ export default function Home() {
           <h1 className="font-serif text-2xl text-brand-ink">Olá{primeiroNome && `, ${primeiroNome}`}</h1>
         </div>
         <div className="flex items-center gap-2">
-          <button className="flex h-11 w-11 items-center justify-center rounded-2xl bg-brand-green-tint text-lg">
+          <button
+            onClick={() => navigate('/semana-gestacional')}
+            className="flex h-11 w-11 items-center justify-center rounded-2xl bg-brand-green-tint text-lg"
+          >
             🙂
           </button>
           <button className="relative flex h-11 w-11 items-center justify-center rounded-2xl border border-brand-border bg-white text-lg">

@@ -13,9 +13,10 @@ Vai crescendo conforme novas telas forem construídas.
    central dos dados do usuário compartilhado entre telas. Nada implementado
    ainda — assunto pausado por enquanto.
 
-2. **Destino dos botões do topo (🙂 e 🔔)** — ainda sem navegação definida
-   ("detalhes depois"). O sino também sempre mostra uma bolinha vermelha fixa,
-   não ligada a notificações reais.
+2. **Destino do botão 🔔 (notificação)** — ainda sem navegação definida. O
+   sino também sempre mostra uma bolinha vermelha fixa, não ligada a
+   notificações reais. (O botão 🙂 já foi resolvido: leva para
+   `/semana-gestacional`.)
 
 3. **Destino do banner "Sua gestação"** — é clicável, mas ainda não decidimos
    pra qual tela ele deve levar.
@@ -32,3 +33,18 @@ Vai crescendo conforme novas telas forem construídas.
    pela URL sem estar logada. Não é específico da Home, vale pra todas as
    telas internas do app (Jornada, Serviços, Perfil também vão precisar
    disso).
+
+## Semana Gestacional (`/semana-gestacional`, destino do botão 🙂 da Home)
+
+7. **Sem ilustração do bebê na barriga** — a tela sempre deveria mostrar uma
+   imagem (padrão/genérica, não upload da usuária) representando como o bebê
+   está naquela semana. Ainda não temos esse banco de imagens, então por
+   enquanto aparece um placeholder ("Ilustração da semana em breve").
+
+8. **Conteúdo por semana incompleto** — comprimento, peso, "o que muda",
+   "o que você pode sentir" e "merece atenção" só existem (mockados) pra
+   semana 22, em `infoSemanaGestacionalMock` (`src/data/mock.ts`). Precisamos
+   decidir/escrever esse conteúdo pra todas as 42 semanas (provavelmente com
+   revisão de alguém da área de saúde, já que é conteúdo educativo sensível).
+   Semanas sem dado mostram um fallback ("Conteúdo dessa semana ainda não
+   disponível") em vez de quebrar.

@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom'
-import { ITENS } from './navIcons'
+import { isNavItemAtivo, ITENS } from './navIcons'
 
 export default function BottomNav() {
   const location = useLocation()
@@ -9,7 +9,7 @@ export default function BottomNav() {
     <nav className="fixed bottom-0 left-1/2 w-full max-w-md -translate-x-1/2 border-t border-brand-border bg-white px-6 py-3 lg:hidden">
       <div className="flex items-center justify-between">
         {ITENS.map(({ path, label, Icon }) => {
-          const ativo = location.pathname === path
+          const ativo = isNavItemAtivo(path, location.pathname)
           return (
             <button
               key={path}

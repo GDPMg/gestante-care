@@ -70,3 +70,35 @@ export const proximoExameMock = {
   nome: 'Ultrassom morfológico',
   status: 'A agendar',
 }
+
+export type InfoSemanaGestacional = {
+  semana: number
+  comprimentoCm: number
+  pesoG: number
+  oQueMuda: string
+  oQuePodeSentir: string[]
+  mereceAtencao: string[]
+}
+
+// Conteúdo educativo por semana gestacional (comprimento/peso do bebê,
+// sintomas comuns, sinais de alerta). Ainda não temos essa base completa —
+// só a semana 22 está preenchida como exemplo. Ver PENDENCIAS.md.
+export const infoSemanaGestacionalMock: InfoSemanaGestacional[] = [
+  {
+    semana: 22,
+    comprimentoCm: 27.8,
+    pesoG: 430,
+    oQueMuda:
+      'É uma fase importante de crescimento. Os sentidos do bebê se desenvolvem e ele já reage a sons e à luz. Os movimentos ficam mais coordenados e frequentes.',
+    oQuePodeSentir: [
+      'Mais movimentos e chutes ao longo do dia',
+      'Variações no sono e mais vontade de descansar',
+      'Apetite mais regular do que nas primeiras semanas',
+    ],
+    mereceAtencao: [
+      'Redução importante dos movimentos',
+      'Sangramento ou perda de líquido',
+      'Contrações ritmadas antes da hora',
+    ],
+  },
+]
