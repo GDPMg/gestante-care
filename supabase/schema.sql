@@ -57,3 +57,11 @@ create policy "usuaria cria o proprio consentimento" on public.consentimentos_lg
 grant select, insert, update on public.perfis to authenticated;
 grant select, insert, update on public.perfil_gestacional to authenticated;
 grant select, insert on public.consentimentos_lgpd to authenticated;
+
+-- 5. Data prevista do parto confirmada pela usuária (tela Perfil) — separada
+-- da dpp_estimada (calculada automaticamente no cadastro a partir da semana
+-- informada, usada em Home/Semana Gestacional). Começa em branco (null) e só
+-- é preenchida quando a usuária souber a data real. Sem RLS/grant novo:
+-- perfil_gestacional já tem update liberado pra dona dos dados.
+alter table public.perfil_gestacional
+  add column if not exists dpp_confirmada date;
