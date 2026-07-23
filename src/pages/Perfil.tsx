@@ -8,7 +8,7 @@ const CONFIGURACOES: { label: string; rota?: string }[] = [
   { label: 'Conta', rota: '/perfil/conta' },
   { label: 'Segurança', rota: '/perfil/seguranca' },
   { label: 'Termos e privacidade' },
-  { label: 'Ajuda e suporte' },
+  { label: 'Ajuda e suporte', rota: '/perfil/ajuda-suporte' },
 ]
 
 export default function Perfil() {

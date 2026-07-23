@@ -187,3 +187,14 @@ conta" (encerra a sessão e volta pro Login).
     rótulo "E-mail cadastrado", aviso de expiração do link, ícone de
     sucesso trocado pra check, e um novo botão "Reenviar e-mail". Acessível
     tanto pelo Login quanto pela nova tela de Segurança.
+
+## Ajuda e Suporte (`/perfil/ajuda-suporte`, dentro de Configurações)
+
+29. **Botão "Falar pelo WhatsApp" sem número definido** — mesma pendência
+    já registrada em Serviços (item 14): quando tivermos o número, vira um
+    link `https://wa.me/55XXXXXXXXXXX`. Reaproveita o `WhatsAppIcon` já
+    criado em `src/components/icons.tsx`.
+
+30. **Horário de atendimento e mensagem de urgência são texto fixo** — sem
+    fonte de dados por trás (não há necessidade de banco aqui, é conteúdo
+    institucional simples; só atualizar direto no código se mudar).
