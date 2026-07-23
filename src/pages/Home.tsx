@@ -63,21 +63,13 @@ export default function Home() {
           <p className="text-sm text-brand-muted">Bem-vinda de volta</p>
           <h1 className="font-serif text-2xl text-brand-ink">Olá{primeiroNome && `, ${primeiroNome}`}</h1>
         </div>
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => navigate('/semana-gestacional')}
-            className="flex h-11 w-11 items-center justify-center rounded-2xl bg-brand-green-tint text-lg"
-          >
-            🙂
-          </button>
-          <button
-            onClick={() => navigate('/notificacoes')}
-            className="relative flex h-11 w-11 items-center justify-center rounded-2xl border border-brand-border bg-white text-lg"
-          >
-            🔔
-            <span className="absolute top-2 right-2.5 h-2 w-2 rounded-full bg-red-500" />
-          </button>
-        </div>
+        <button
+          onClick={() => navigate('/notificacoes')}
+          className="relative flex h-11 w-11 items-center justify-center rounded-2xl border border-brand-border bg-white text-lg"
+        >
+          🔔
+          <span className="absolute top-2 right-2.5 h-2 w-2 rounded-full bg-red-500" />
+        </button>
       </div>
 
       <div className="flex flex-col gap-5 lg:grid lg:grid-cols-2 lg:gap-4">

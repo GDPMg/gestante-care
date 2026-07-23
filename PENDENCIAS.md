@@ -16,8 +16,9 @@ Vai crescendo conforme novas telas forem construídas.
 2. **Bolinha vermelha do sino é sempre fixa** — não reflete uma contagem
    real de não lidas, porque as notificações ainda não existem de verdade
    (ver seção "Notificações" abaixo). (O destino do botão já foi resolvido:
-   leva para `/notificacoes`, assim como o 🙂 leva para
-   `/semana-gestacional`.)
+   leva para `/notificacoes`.) O botão 🙂 que ficava ao lado foi **removido**
+   — era redundante com o card "Sua gestação", que já leva para
+   `/semana-gestacional`.
 
 3. ~~Destino do banner "Sua gestação"~~ — resolvido: leva para
    `/semana-gestacional`, igual ao botão 🙂.
