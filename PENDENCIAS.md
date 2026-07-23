@@ -158,3 +158,32 @@ conta" (encerra a sessão e volta pro Login).
 24. **Alterar data de nascimento funciona de verdade** — atualiza
     `perfis.data_nascimento` direto, sem verificação (como planejado, já
     que não é um dado sensível de autenticação).
+
+## Segurança (`/perfil/seguranca`, dentro de Configurações)
+
+25. **Alterar senha funciona de verdade e foi testado ponta a ponta** —
+    verifica a senha atual (via `signInWithPassword`) antes de trocar
+    (`updateUser({ password })`); testamos que senha atual errada é
+    rejeitada, e que a senha nova realmente passa a funcionar no próximo
+    login.
+
+26. **Erro de rede secundário observado no teste (não bloqueia o uso)**:
+    depois de trocar a senha, aparece um 403 "session_not_found" no
+    console — parece ser o Supabase tentando renovar em segundo plano a
+    sessão antiga (substituída pela nova, criada pelo `signInWithPassword`
+    usado pra conferir a senha atual). Não impediu nada no fluxo (logout e
+    login com a senha nova funcionaram normalmente), mas vale investigar
+    se vira um problema de verdade mais pra frente.
+
+27. **"O link expira em 30 minutos"** (tela "Esqueceu sua senha") — esse
+    texto é uma afirmação específica que precisa bater com a configuração
+    real do Supabase (Authentication → Settings → tempo de expiração do
+    link de recuperação). Ainda não conferimos/ajustamos esse valor no
+    dashboard — hoje é só texto, pode estar errado se o padrão do Supabase
+    for diferente de 30 minutos.
+
+28. A tela `/recuperar-senha` foi **atualizada** (não duplicada) pra bater
+    com o novo design: ícone de envelope também na etapa de formulário,
+    rótulo "E-mail cadastrado", aviso de expiração do link, ícone de
+    sucesso trocado pra check, e um novo botão "Reenviar e-mail". Acessível
+    tanto pelo Login quanto pela nova tela de Segurança.

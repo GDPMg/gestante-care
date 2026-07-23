@@ -70,6 +70,12 @@ dados.
   provedor de SMS configurado no Supabase (ex: Twilio). A tela existe e
   simula o fluxo (código de 6 dígitos), mas não chama a API nem valida nada
   de verdade. Ver `PENDENCIAS.md`.
+- **Alterar senha** (tela Perfil → Segurança): como o Supabase não tem um
+  endpoint pra "conferir a senha atual sem trocar de sessão", a verificação é
+  feita chamando `supabase.auth.signInWithPassword()` com a senha atual antes
+  de `updateUser({ password })`. Funciona e foi testado ponta a ponta, mas
+  gera um 403 "session_not_found" secundário no console (provável corrida de
+  refresh da sessão antiga) — não bloqueia o uso, ver `PENDENCIAS.md`.
 
 ## Banco de dados
 
