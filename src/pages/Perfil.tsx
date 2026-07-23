@@ -1,25 +1,22 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AppLayout from '../components/AppLayout'
-import SelectField from '../components/SelectField'
 import { supabase } from '../lib/supabaseClient'
+import { formatISODateToBR } from '../lib/format'
 
 const CONFIGURACOES = ['Conta', 'Segurança', 'Termos e privacidade', 'Ajuda e suporte']
 
 export default function Perfil() {
   const navigate = useNavigate()
-  const [userId, setUserId] = useState<string | null>(null)
   const [nomeCompleto, setNomeCompleto] = useState('')
   const [semana, setSemana] = useState<number | null>(null)
   const [dppConfirmada, setDppConfirmada] = useState('')
-  const [editandoSemana, setEditandoSemana] = useState(false)
 
   useEffect(() => {
     async function carregarDados() {
       const { data: userData } = await supabase.auth.getUser()
       const id = userData.user?.id
       if (!id) return
-      setUserId(id)
 
       const [{ data: perfil }, { data: gestacional }] = await Promise.all([
         supabase.from('perfis').select('nome_completo').eq('id', id).single(),
@@ -33,20 +30,6 @@ export default function Perfil() {
 
     carregarDados()
   }, [])
-
-  async function handleAlterarDpp(valor: string) {
-    setDppConfirmada(valor)
-    if (!userId) return
-    await supabase.from('perfil_gestacional').update({ dpp_confirmada: valor || null }).eq('usuario_id', userId)
-  }
-
-  async function handleAlterarSemana(valor: string) {
-    const novaSemana = Number(valor)
-    setSemana(novaSemana)
-    setEditandoSemana(false)
-    if (!userId) return
-    await supabase.from('perfil_gestacional').update({ semana_informada: novaSemana }).eq('usuario_id', userId)
-  }
 
   async function handleSairDaConta() {
     await supabase.auth.signOut()
@@ -76,42 +59,34 @@ export default function Perfil() {
 
       <section>
         <p className="mb-2 text-xs font-semibold tracking-wide text-brand-muted">GESTAÇÃO</p>
-        <div className="rounded-2xl border border-brand-border bg-white p-4">
-          <label htmlFor="dpp-confirmada" className="text-sm text-brand-muted">
-            Data prevista do parto
-          </label>
-          <input
-            id="dpp-confirmada"
-            type="date"
-            value={dppConfirmada}
-            onChange={(e) => handleAlterarDpp(e.target.value)}
-            className="mt-1 block w-full bg-transparent text-brand-ink focus:outline-none"
-          />
+        <div className="rounded-2xl border border-brand-border bg-white">
+          <button
+            onClick={() => navigate('/perfil/data-prevista-parto')}
+            className="flex w-full items-center justify-between px-4 py-4 text-left"
+          >
+            <div>
+              <p className="text-sm text-brand-muted">Data prevista do parto</p>
+              <p className="mt-0.5 font-medium text-brand-ink">
+                {dppConfirmada ? formatISODateToBR(dppConfirmada) : 'Adicionar data'}
+              </p>
+            </div>
+            <span className="text-brand-muted" aria-hidden>
+              ›
+            </span>
+          </button>
 
-          <hr className="my-4 border-brand-border" />
+          <hr className="border-brand-border" />
 
-          {editandoSemana ? (
-            <SelectField
-              label="Semana de gestação"
-              value={semana ? String(semana) : ''}
-              onChange={handleAlterarSemana}
-              options={Array.from({ length: 42 }, (_, i) => i + 1).map((n) => ({
-                value: String(n),
-                label: `${n}ª semana`,
-              }))}
-            />
-          ) : (
-            <button
-              onClick={() => setEditandoSemana(true)}
-              className="flex w-full items-center justify-between text-left"
-            >
-              <span className="text-brand-ink">Semana de gestação</span>
-              <span className="flex items-center gap-1 font-semibold text-brand-green">
-                {semana ?? '—'}ª
-                <span aria-hidden>›</span>
-              </span>
-            </button>
-          )}
+          <button
+            onClick={() => navigate('/perfil/semana')}
+            className="flex w-full items-center justify-between px-4 py-4 text-left"
+          >
+            <span className="text-brand-ink">Semana de gestação</span>
+            <span className="flex items-center gap-1 font-semibold text-brand-green">
+              {semana ?? '—'}ª
+              <span aria-hidden>›</span>
+            </span>
+          </button>
         </div>
       </section>
 
@@ -135,7 +110,7 @@ export default function Perfil() {
       </section>
 
       <button className="flex items-center justify-center gap-1.5 text-sm text-brand-muted">
-        <span aria-hidden>♡</span> Informar fim da gestação
+        <span aria-hidden>♡</span> Atualizar minha gestação
       </button>
 
       <button
