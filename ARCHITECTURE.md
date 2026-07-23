@@ -55,6 +55,21 @@ dados.
   evitar o limite de envio de e-mail do plano gratuito durante testes.
   **Reativar antes de qualquer lançamento real**, junto com uma revisão geral
   das configurações de e-mail/rate limit.
+- **Alterar e-mail** (tela Perfil → Conta): `supabase.auth.updateUser({ email },
+  { emailRedirectTo })` envia um link de confirmação (fluxo padrão do
+  Supabase, não usa código OTP) apontando pra `/perfil/conta/email-confirmado`.
+  Depende da Redirect URL (`http://localhost:5173/**` + o domínio de
+  produção) cadastrada em Authentication → URL Configuration. Decisão de
+  produto: **"Secure email change" fica ativado** — o Supabase manda o link
+  de confirmação tanto pro e-mail antigo quanto pro novo. **Testado na
+  prática**: confirmar em qualquer um dos dois já efetiva a troca — não é
+  preciso clicar nos dois (o segundo funciona como aviso de segurança, não
+  como segunda etapa obrigatória). As telas (`AlterarEmail.tsx`,
+  `EmailConfirmado.tsx`) refletem esse comportamento real.
+- **Alterar telefone** (tela Perfil → Conta): ainda **não é funcional** — sem
+  provedor de SMS configurado no Supabase (ex: Twilio). A tela existe e
+  simula o fluxo (código de 6 dígitos), mas não chama a API nem valida nada
+  de verdade. Ver `PENDENCIAS.md`.
 
 ## Banco de dados
 

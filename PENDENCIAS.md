@@ -134,3 +134,27 @@ O que **já funciona de verdade** nesta tela (testado ponta a ponta): editar
 e salvar a data prevista do parto (`dpp_confirmada`, coluna em
 `perfil_gestacional`), editar e salvar a semana gestacional, e "Sair da
 conta" (encerra a sessão e volta pro Login).
+
+## Conta (`/perfil/conta`, dentro de Configurações)
+
+22. **Alterar e-mail funciona de verdade** — usa o fluxo nativo do Supabase
+    Auth (`updateUser` + link de confirmação por e-mail, `emailRedirectTo`
+    apontando pra `/perfil/conta/email-confirmado`). Depende da Redirect URL
+    (`/**`) cadastrada em Authentication → URL Configuration. Decisão do
+    usuário: **manter "Secure email change" ativado** — o link de
+    confirmação vai tanto pro e-mail antigo quanto pro novo, mas testamos na
+    prática e **confirmar em qualquer um dos dois já efetiva a troca**
+    (não precisa dos dois). As telas já foram ajustadas pra refletir isso.
+
+23. **Alterar telefone é só visual, sem SMS real** — mesmo motivo já
+    registrado antes (falta provedor de SMS configurado no Supabase, tipo
+    Twilio). O fluxo completo (tela de telefone → código de 6 dígitos →
+    sucesso) existe e funciona visualmente, mas nenhuma etapa chama o
+    Supabase de verdade nem valida o código — qualquer coisa digitada
+    "confirma". Quando decidirmos configurar um provedor de SMS, dá pra
+    trocar por `supabase.auth.updateUser({ phone })` +
+    `verifyOtp({ type: 'phone_change' })`.
+
+24. **Alterar data de nascimento funciona de verdade** — atualiza
+    `perfis.data_nascimento` direto, sem verificação (como planejado, já
+    que não é um dado sensível de autenticação).

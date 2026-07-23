@@ -4,7 +4,12 @@ import AppLayout from '../components/AppLayout'
 import { supabase } from '../lib/supabaseClient'
 import { formatISODateToBR } from '../lib/format'
 
-const CONFIGURACOES = ['Conta', 'Segurança', 'Termos e privacidade', 'Ajuda e suporte']
+const CONFIGURACOES: { label: string; rota?: string }[] = [
+  { label: 'Conta', rota: '/perfil/conta' },
+  { label: 'Segurança' },
+  { label: 'Termos e privacidade' },
+  { label: 'Ajuda e suporte' },
+]
 
 export default function Perfil() {
   const navigate = useNavigate()
@@ -95,12 +100,13 @@ export default function Perfil() {
         <div className="rounded-2xl border border-brand-border bg-white">
           {CONFIGURACOES.map((item, index) => (
             <button
-              key={item}
+              key={item.label}
+              onClick={item.rota ? () => navigate(item.rota!) : undefined}
               className={`flex w-full items-center justify-between px-4 py-4 text-left ${
                 index > 0 ? 'border-t border-brand-border' : ''
               }`}
             >
-              <span className="text-brand-ink">{item}</span>
+              <span className="text-brand-ink">{item.label}</span>
               <span className="text-brand-muted" aria-hidden>
                 ›
               </span>
