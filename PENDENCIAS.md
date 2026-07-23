@@ -121,11 +121,16 @@ Vai crescendo conforme novas telas forem construídas.
     privacidade, Ajuda e suporte) não levam a lugar nenhum** — só visual
     por enquanto, aguardando o usuário explicar o que cada um deve fazer.
 
-21. **"Informar fim da gestação" sem comportamento definido** — link
-    visível, sem ação ao tocar.
+21. **"Atualizar minha gestação" sem comportamento definido** (antes
+    chamado "Informar fim da gestação") — link visível, sem ação ao tocar.
+
+**Atualização**: editar a "Data prevista do parto" e a "Semana de
+gestação" deixou de ser inline — agora cada uma abre sua própria tela
+(`/perfil/data-prevista-parto` e `/perfil/semana`), com botão "Salvar
+alterações". A de semana usa um seletor de +/- (não o dropdown do
+Cadastro).
 
 O que **já funciona de verdade** nesta tela (testado ponta a ponta): editar
-e salvar a data prevista do parto (`dpp_confirmada`, nova coluna em
-`perfil_gestacional`), editar a semana gestacional inline (reaproveitando o
-`SelectField` do Cadastro), e "Sair da conta" (encerra a sessão e volta pro
-Login).
+e salvar a data prevista do parto (`dpp_confirmada`, coluna em
+`perfil_gestacional`), editar e salvar a semana gestacional, e "Sair da
+conta" (encerra a sessão e volta pro Login).
