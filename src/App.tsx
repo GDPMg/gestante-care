@@ -17,6 +17,7 @@ import AlterarEmail from './pages/AlterarEmail'
 import EmailConfirmado from './pages/EmailConfirmado'
 import AlterarTelefone from './pages/AlterarTelefone'
 import AlterarDataNascimento from './pages/AlterarDataNascimento'
+import Seguranca from './pages/Seguranca'
 import RecuperarSenha from './pages/RecuperarSenha'
 import RedefinirSenha from './pages/RedefinirSenha'
 import Admin from './pages/Admin'
@@ -45,6 +46,7 @@ export default function App() {
         <Route path="/perfil/conta/email-confirmado" element={<EmailConfirmado />} />
         <Route path="/perfil/conta/telefone" element={<AlterarTelefone />} />
         <Route path="/perfil/conta/nascimento" element={<AlterarDataNascimento />} />
+        <Route path="/perfil/seguranca" element={<Seguranca />} />
         <Route path="/admin" element={<Admin />} />
       </Routes>
     </BrowserRouter>

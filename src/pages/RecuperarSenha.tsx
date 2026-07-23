@@ -38,22 +38,30 @@ export default function RecuperarSenha() {
     return (
       <AuthLayout>
       <div className="mx-auto flex min-h-svh max-w-md flex-col justify-center gap-6 px-6 py-8 text-center">
-        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-brand-green-tint">
+        <button
+          onClick={() => navigate('/login')}
+          className="flex w-fit items-center gap-1 text-sm font-medium text-brand-green"
+        >
+          <span aria-hidden>‹</span> Voltar
+        </button>
+
+        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-green-tint">
           <svg viewBox="0 0 24 24" className="h-8 w-8 text-brand-green" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M4 6h16v12H4z" />
-            <path d="M4 7l8 6 8-6" />
+            <path d="M5 13l4 4L19 7" />
           </svg>
         </div>
 
         <div>
-          <h1 className="font-serif text-3xl text-brand-ink">E-mail enviado</h1>
+          <h1 className="font-serif text-3xl text-brand-ink">E-mail enviado!</h1>
           <p className="mt-2 text-brand-muted">
-            Enviamos um link de recuperação para <span className="font-medium text-brand-ink">{email}</span>.
-            Verifique sua caixa de entrada e também o spam.
+            Verifique sua caixa de entrada e clique no link para criar sua nova senha.
           </p>
         </div>
 
-        <Button onClick={() => navigate('/login')}>Voltar para o login</Button>
+        <Button onClick={() => navigate('/login')}>Voltar ao login</Button>
+        <button onClick={handleEnviar} disabled={submitting} className="text-center text-sm font-medium text-brand-muted">
+          Reenviar e-mail
+        </button>
       </div>
       </AuthLayout>
     )
@@ -69,15 +77,22 @@ export default function RecuperarSenha() {
         <span aria-hidden>‹</span> Voltar
       </button>
 
+      <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-green-tint">
+        <svg viewBox="0 0 24 24" className="h-7 w-7 text-brand-green" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M4 6h16v12H4z" />
+          <path d="M4 7l8 6 8-6" />
+        </svg>
+      </div>
+
       <div>
-        <h1 className="font-serif text-3xl text-brand-ink">Recuperar senha</h1>
+        <h1 className="font-serif text-3xl text-brand-ink">Esqueceu sua senha?</h1>
         <p className="mt-1 text-brand-muted">
-          Informe o e-mail cadastrado e enviaremos um link para você criar uma nova senha.
+          Sem problema. Informe o e-mail cadastrado e enviaremos um link para você criar uma nova senha.
         </p>
       </div>
 
       <TextField
-        label="E-mail"
+        label="E-mail cadastrado"
         type="email"
         inputMode="email"
         placeholder="seu@email.com"
@@ -90,6 +105,24 @@ export default function RecuperarSenha() {
       <Button onClick={handleEnviar} disabled={submitting}>
         {submitting ? 'Enviando...' : 'Enviar link de recuperação'}
       </Button>
+
+      <div className="flex items-start gap-2 rounded-2xl bg-brand-green-tint p-4">
+        <svg
+          viewBox="0 0 24 24"
+          className="mt-0.5 h-4 w-4 shrink-0 text-brand-green"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          aria-hidden
+        >
+          <circle cx="12" cy="12" r="9" />
+          <path d="M12 11v5" strokeLinecap="round" />
+          <circle cx="12" cy="8" r="0.75" fill="currentColor" stroke="none" />
+        </svg>
+        <p className="text-sm text-brand-ink">
+          O link expira em 30 minutos. Verifique também sua caixa de spam caso não encontre o e-mail.
+        </p>
+      </div>
     </div>
     </AuthLayout>
   )

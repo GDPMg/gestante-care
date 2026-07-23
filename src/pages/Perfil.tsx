@@ -6,7 +6,7 @@ import { formatISODateToBR } from '../lib/format'
 
 const CONFIGURACOES: { label: string; rota?: string }[] = [
   { label: 'Conta', rota: '/perfil/conta' },
-  { label: 'Segurança' },
+  { label: 'Segurança', rota: '/perfil/seguranca' },
   { label: 'Termos e privacidade' },
   { label: 'Ajuda e suporte' },
 ]
