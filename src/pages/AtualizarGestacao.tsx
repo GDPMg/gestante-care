@@ -4,6 +4,7 @@ import AppLayout from '../components/AppLayout'
 import Button from '../components/Button'
 import TextField from '../components/TextField'
 import { supabase } from '../lib/supabaseClient'
+import { useUserData } from '../contexts/UserDataContext'
 
 type Etapa = 'inicio' | 'bebe-nasceu' | 'outra-situacao' | 'sucesso'
 
@@ -28,19 +29,21 @@ function VoltarPerfil({ navigate }: { navigate: ReturnType<typeof useNavigate> }
 
 export default function AtualizarGestacao() {
   const navigate = useNavigate()
+  const { refresh } = useUserData()
   const [etapa, setEtapa] = useState<Etapa>('inicio')
   const [dataNascimentoBebe, setDataNascimentoBebe] = useState('')
   const [salvando, setSalvando] = useState(false)
 
   async function confirmarStatus(status: 'bebe_nasceu' | 'interrompida', dataBebe?: string) {
     setSalvando(true)
-    const { data: userData } = await supabase.auth.getUser()
-    const userId = userData.user?.id
+    const { data: sessionData } = await supabase.auth.getSession()
+    const userId = sessionData.session?.user?.id
     if (userId) {
       await supabase
         .from('perfil_gestacional')
         .update({ status_gestacao: status, data_nascimento_bebe: dataBebe ?? null })
         .eq('usuario_id', userId)
+      await refresh()
     }
     setSalvando(false)
     setEtapa('sucesso')

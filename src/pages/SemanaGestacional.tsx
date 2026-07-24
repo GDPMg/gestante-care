@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AppLayout from '../components/AppLayout'
-import { supabase } from '../lib/supabaseClient'
+import { useUserData } from '../contexts/UserDataContext'
 import { infoSemanaGestacionalMock } from '../data/mock'
 
 function trimestre(semana: number) {
@@ -12,25 +12,14 @@ function trimestre(semana: number) {
 
 export default function SemanaGestacional() {
   const navigate = useNavigate()
+  const { semana: semanaUsuaria } = useUserData()
+  // Estado local pra permitir navegar pelas semanas (‹ ›) sem alterar a semana
+  // real da usuária. Começa na semana dela (vinda do cache central).
   const [semana, setSemana] = useState<number | null>(null)
 
   useEffect(() => {
-    async function carregarSemana() {
-      const { data: userData } = await supabase.auth.getUser()
-      const userId = userData.user?.id
-      if (!userId) return
-
-      const { data } = await supabase
-        .from('perfil_gestacional')
-        .select('semana_informada')
-        .eq('usuario_id', userId)
-        .single()
-
-      if (data?.semana_informada) setSemana(data.semana_informada)
-    }
-
-    carregarSemana()
-  }, [])
+    if (semanaUsuaria != null) setSemana(semanaUsuaria)
+  }, [semanaUsuaria])
 
   const info = useMemo(
     () => infoSemanaGestacionalMock.find((item) => item.semana === semana),

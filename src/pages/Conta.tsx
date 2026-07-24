@@ -12,11 +12,11 @@ export default function Conta() {
 
   useEffect(() => {
     async function carregarDados() {
-      const { data: userData } = await supabase.auth.getUser()
-      const id = userData.user?.id
+      const { data: sessionData } = await supabase.auth.getSession()
+      const id = sessionData.session?.user?.id
       if (!id) return
 
-      if (userData.user?.email) setEmail(userData.user.email)
+      if (sessionData.session?.user?.email) setEmail(sessionData.session.user.email)
 
       const { data: perfil } = await supabase
         .from('perfis')

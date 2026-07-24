@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AppLayout from '../components/AppLayout'
+import Skeleton from '../components/Skeleton'
 import { supabase } from '../lib/supabaseClient'
+import { useUserData } from '../contexts/UserDataContext'
 import { formatISODateToBR } from '../lib/format'
 
 const CONFIGURACOES: { label: string; rota?: string }[] = [
@@ -13,28 +14,7 @@ const CONFIGURACOES: { label: string; rota?: string }[] = [
 
 export default function Perfil() {
   const navigate = useNavigate()
-  const [nomeCompleto, setNomeCompleto] = useState('')
-  const [semana, setSemana] = useState<number | null>(null)
-  const [dppConfirmada, setDppConfirmada] = useState('')
-
-  useEffect(() => {
-    async function carregarDados() {
-      const { data: userData } = await supabase.auth.getUser()
-      const id = userData.user?.id
-      if (!id) return
-
-      const [{ data: perfil }, { data: gestacional }] = await Promise.all([
-        supabase.from('perfis').select('nome_completo').eq('id', id).single(),
-        supabase.from('perfil_gestacional').select('semana_informada, dpp_confirmada').eq('usuario_id', id).single(),
-      ])
-
-      if (perfil?.nome_completo) setNomeCompleto(perfil.nome_completo)
-      if (gestacional?.semana_informada) setSemana(gestacional.semana_informada)
-      if (gestacional?.dpp_confirmada) setDppConfirmada(gestacional.dpp_confirmada)
-    }
-
-    carregarDados()
-  }, [])
+  const { nomeCompleto, semana, dppConfirmada, loading } = useUserData()
 
   async function handleSairDaConta() {
     await supabase.auth.signOut()
@@ -57,7 +37,11 @@ export default function Perfil() {
             ✏️
           </button>
         </div>
-        <h1 className="mt-2 font-serif text-2xl text-brand-ink">{nomeCompleto || '...'}</h1>
+        {loading && !nomeCompleto ? (
+          <Skeleton className="mt-2 h-7 w-44" />
+        ) : (
+          <h1 className="mt-2 font-serif text-2xl text-brand-ink">{nomeCompleto || '...'}</h1>
+        )}
         {semana && <p className="text-sm font-medium text-brand-green">{semana}ª semana</p>}
         <button className="text-sm font-semibold text-brand-green">Editar perfil</button>
       </div>

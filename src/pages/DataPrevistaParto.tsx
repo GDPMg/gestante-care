@@ -4,38 +4,28 @@ import AppLayout from '../components/AppLayout'
 import Button from '../components/Button'
 import TextField from '../components/TextField'
 import { supabase } from '../lib/supabaseClient'
+import { useUserData } from '../contexts/UserDataContext'
 
 export default function DataPrevistaParto() {
   const navigate = useNavigate()
-  const [userId, setUserId] = useState<string | null>(null)
+  const { dppConfirmada, loading, refresh } = useUserData()
   const [dpp, setDpp] = useState('')
-  const [carregando, setCarregando] = useState(true)
   const [salvando, setSalvando] = useState(false)
 
+  // Semeia o campo com o valor do cache central assim que ele chega.
   useEffect(() => {
-    async function carregarDados() {
-      const { data: userData } = await supabase.auth.getUser()
-      const id = userData.user?.id
-      if (!id) return
-      setUserId(id)
+    if (dppConfirmada) setDpp(dppConfirmada)
+  }, [dppConfirmada])
 
-      const { data } = await supabase
-        .from('perfil_gestacional')
-        .select('dpp_confirmada')
-        .eq('usuario_id', id)
-        .single()
-
-      if (data?.dpp_confirmada) setDpp(data.dpp_confirmada)
-      setCarregando(false)
-    }
-
-    carregarDados()
-  }, [])
+  const carregando = loading && !dppConfirmada
 
   async function handleSalvar() {
+    const { data: sessionData } = await supabase.auth.getSession()
+    const userId = sessionData.session?.user?.id
     if (!userId) return
     setSalvando(true)
     await supabase.from('perfil_gestacional').update({ dpp_confirmada: dpp || null }).eq('usuario_id', userId)
+    await refresh()
     setSalvando(false)
     navigate('/perfil')
   }

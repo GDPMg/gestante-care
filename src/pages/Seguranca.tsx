@@ -28,8 +28,8 @@ export default function Seguranca() {
     setSalvando(true)
     setErro(null)
     try {
-      const { data: userData } = await supabase.auth.getUser()
-      const email = userData.user?.email
+      const { data: sessionData } = await supabase.auth.getSession()
+      const email = sessionData.session?.user?.email
       if (!email) throw new Error('Não foi possível identificar sua conta.')
 
       const { error: erroSenhaAtual } = await supabase.auth.signInWithPassword({ email, password: senhaAtual })
