@@ -28,11 +28,16 @@ dados.
   `PRODUCT_SPEC.md`.
 - `src/components/` — elementos reutilizáveis de UI (`Button`, `TextField`,
   `SelectField`, `StepProgress`, `Skeleton`).
-- `src/contexts/` — `UserDataContext.tsx`: cache central dos dados da usuária
-  (nome, semana, DPP confirmada, status da gestação). Busca uma vez após o
-  login, guarda em memória + `localStorage` e revalida por trás
-  (stale-while-revalidate), pra a navegação entre telas ser instantânea e a
-  abertura do app não piscar vazia. As telas consomem via `useUserData()`.
+- `src/contexts/` — `AuthContext.tsx`: estado de autenticação
+  (`loading`/`authenticated`/`unauthenticated`) usado pelos guards de rota
+  (`ProtectedRoute`/`PublicRoute` em `App.tsx`). A sessão é persistida pelo
+  próprio supabase-js (localStorage + autoRefreshToken, padrão), então a
+  usuária continua logada entre visitas até clicar "Sair da conta".
+  `UserDataContext.tsx`: cache central dos dados da usuária (nome, semana, DPP
+  confirmada, status da gestação). Busca uma vez após o login, guarda em
+  memória + `localStorage` e revalida por trás (stale-while-revalidate), pra a
+  navegação entre telas ser instantânea e a abertura do app não piscar vazia.
+  As telas consomem via `useUserData()`.
 - `src/lib/` — `supabaseClient.ts` (cliente Supabase), `format.ts` (máscaras de
   CPF/telefone/data e cálculo de previsão de parto), `authErrors.ts` (tradução
   de erros do Supabase Auth para português).
