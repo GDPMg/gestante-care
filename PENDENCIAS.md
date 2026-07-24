@@ -45,10 +45,24 @@ Vai crescendo conforme novas telas forem construídas.
    `src/data/mock.ts`) — no futuro provavelmente precisa vir do Painel Admin,
    pra dar pra trocar sem mexer em código.
 
-6. **Sem proteção de rota** — qualquer pessoa consegue abrir `/home` direto
-   pela URL sem estar logada. Não é específico da Home, vale pra todas as
-   telas internas do app (Jornada, Serviços, Perfil também vão precisar
-   disso).
+6. ~~**Sem proteção de rota**~~ — **resolvido**. `App.tsx` agora tem guards
+   (`ProtectedRoute`/`PublicRoute`) baseados no `AuthContext`
+   (`src/contexts/AuthContext.tsx`):
+   - Telas internas (`/home`, `/perfil/*`, `/servicos`, `/jornada`, etc.)
+     exigem sessão — sem sessão redirecionam pra `/login`.
+   - Telas de entrada (`/` e `/login`) redirecionam pra `/home` se já
+     estiver logada → "abrir o app e já estar dentro". A sessão é persistida
+     pelo próprio supabase-js (localStorage + autoRefreshToken, padrão);
+     **Opção A**: fica logada até clicar "Sair da conta".
+   - Ficaram **abertas** de propósito: `/cadastro` (o `signUp` cria a sessão
+     no meio do fluxo), `/redefinir-senha` (abre autenticada via link de
+     recuperação) e `/consentimento` (conteúdo institucional).
+   - Testado ponta a ponta (sem sessão→login, logada→home, logout→login,
+     cadastro não quebra).
+   - **Ainda em aberto**: (a) `/admin` continua sem proteção — precisa de
+     controle por papel/role, não só "estar logada" (fica pra quando o
+     Painel Admin evoluir); (b) endurecer a duração da sessão (Opção B:
+     timeout por inatividade no dashboard do Supabase) se um dia quisermos.
 
 ## Semana Gestacional (`/semana-gestacional`, destino do card "Sua gestação" na Home)
 
