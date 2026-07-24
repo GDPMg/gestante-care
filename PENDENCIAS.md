@@ -21,7 +21,7 @@ Vai crescendo conforme novas telas forem construídas.
    `/semana-gestacional`.
 
 3. ~~Destino do banner "Sua gestação"~~ — resolvido: leva para
-   `/semana-gestacional`, igual ao botão 🙂.
+   `/semana-gestacional`.
 
 4. **"Próxima consulta" e "Próximo exame" são conteúdo fixo (mock)** — ainda
    não decidimos como vai funcionar o controle real de agendamento de
@@ -36,7 +36,7 @@ Vai crescendo conforme novas telas forem construídas.
    telas internas do app (Jornada, Serviços, Perfil também vão precisar
    disso).
 
-## Semana Gestacional (`/semana-gestacional`, destino do botão 🙂 da Home)
+## Semana Gestacional (`/semana-gestacional`, destino do card "Sua gestação" na Home)
 
 7. **Sem ilustração do bebê na barriga** — a tela sempre deveria mostrar uma
    imagem (padrão/genérica, não upload da usuária) representando como o bebê
@@ -199,3 +199,22 @@ conta" (encerra a sessão e volta pro Login).
 30. **Horário de atendimento e mensagem de urgência são texto fixo** — sem
     fonte de dados por trás (não há necessidade de banco aqui, é conteúdo
     institucional simples; só atualizar direto no código se mudar).
+
+## Atualizar minha gestação (`/perfil/atualizar-gestacao`, link no Perfil)
+
+31. **Grava o status de verdade, mas nada além disso reage a essa
+    mudança ainda** — "Meu bebê nasceu" e "Minha gestação foi interrompida"
+    já salvam em `perfil_gestacional.status_gestacao` (+ `data_nascimento_bebe`
+    quando aplicável), testado ponta a ponta. Mas hoje **nada no resto do
+    app olha pra esse status**: a Home continua mostrando "Você está na Xª
+    semana", os lembretes continuam os mesmos, etc. Precisa decidir depois
+    como cada tela deve se comportar pra uma usuária com `bebe_nasceu` ou
+    `interrompida` (esconder o card de gestação? mostrar outra Home?).
+
+32. **"Prefiro falar com alguém primeiro" já navega de verdade** para
+    `/perfil/ajuda-suporte` (não é só visual).
+
+33. **Sem confirmação/"tem certeza?"** antes de gravar "Minha gestação foi
+    interrompida" — o clique no card já salva direto. Pode valer a pena
+    adicionar uma confirmação extra dado o peso emocional da ação, mas não
+    foi pedido ainda.

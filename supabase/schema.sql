@@ -65,3 +65,13 @@ grant select, insert on public.consentimentos_lgpd to authenticated;
 -- perfil_gestacional já tem update liberado pra dona dos dados.
 alter table public.perfil_gestacional
   add column if not exists dpp_confirmada date;
+
+-- 6. Status da gestação (tela Perfil → "Atualizar minha gestação") — registra
+-- quando o bebê nasce ou a gestação é interrompida. Por enquanto só grava o
+-- status; ainda NÃO pausa lembretes/notificações nem muda o que a Home
+-- mostra (ver PENDENCIAS.md) — isso fica pra depois.
+alter table public.perfil_gestacional
+  add column if not exists status_gestacao text not null default 'em_andamento'
+    check (status_gestacao in ('em_andamento', 'bebe_nasceu', 'interrompida'));
+alter table public.perfil_gestacional
+  add column if not exists data_nascimento_bebe date;
