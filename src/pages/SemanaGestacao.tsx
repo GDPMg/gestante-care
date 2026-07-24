@@ -3,36 +3,27 @@ import { useNavigate } from 'react-router-dom'
 import AppLayout from '../components/AppLayout'
 import Button from '../components/Button'
 import { supabase } from '../lib/supabaseClient'
+import { useUserData } from '../contexts/UserDataContext'
 
 export default function SemanaGestacao() {
   const navigate = useNavigate()
-  const [userId, setUserId] = useState<string | null>(null)
+  const { semana: semanaUsuaria, loading, refresh } = useUserData()
   const [semana, setSemana] = useState<number | null>(null)
   const [salvando, setSalvando] = useState(false)
 
+  // Semeia o seletor com a semana atual da usuária (vinda do cache central).
   useEffect(() => {
-    async function carregarDados() {
-      const { data: userData } = await supabase.auth.getUser()
-      const id = userData.user?.id
-      if (!id) return
-      setUserId(id)
-
-      const { data } = await supabase
-        .from('perfil_gestacional')
-        .select('semana_informada')
-        .eq('usuario_id', id)
-        .single()
-
-      setSemana(data?.semana_informada ?? 1)
-    }
-
-    carregarDados()
-  }, [])
+    if (semanaUsuaria != null) setSemana(semanaUsuaria)
+    else if (!loading) setSemana(1)
+  }, [semanaUsuaria, loading])
 
   async function handleSalvar() {
+    const { data: sessionData } = await supabase.auth.getSession()
+    const userId = sessionData.session?.user?.id
     if (!userId) return
     setSalvando(true)
     await supabase.from('perfil_gestacional').update({ semana_informada: semana }).eq('usuario_id', userId)
+    await refresh()
     setSalvando(false)
     navigate('/perfil')
   }

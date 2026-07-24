@@ -5,13 +5,27 @@ Vai crescendo conforme novas telas forem construídas.
 
 ## Home
 
-1. **Loading do nome e da semana gestacional** — hoje a Home renderiza antes
-   dos dados chegarem do Supabase, então "Olá" e o card de gestação aparecem
-   vazios por um instante e só depois preenchem. Alternativas discutidas:
-   skeleton loading (recomendado), tela de carregamento cheia antes de exibir
-   a Home, buscar os dados já no login/cadastro antes de navegar, ou um cache
-   central dos dados do usuário compartilhado entre telas. Nada implementado
-   ainda — assunto pausado por enquanto.
+1. ~~**Loading do nome e da semana gestacional**~~ — **resolvido**. O lag
+   vinha de duas coisas somadas: (a) toda tela começava com
+   `supabase.auth.getUser()`, que é uma **ida à rede** pra revalidar o token,
+   e (b) cada tela rebuscava os mesmos dados do zero a cada navegação.
+   Solução implementada (cache central + persistência):
+   - Novo `UserDataProvider` (`src/contexts/UserDataContext.tsx`) envolve o
+     app: busca `perfis` + `perfil_gestacional` **uma vez** após o login,
+     guarda em memória **e** no `localStorage` (`gc_user_data`), e expõe
+     `useUserData()` com `{ nomeCompleto, primeiroNome, semana, dppConfirmada,
+     status, loading, refresh }`.
+   - Abertura do app hidrata na hora com o último dado do `localStorage` e
+     revalida por trás (stale-while-revalidate) → não pisca mais vazio.
+   - Navegação entre telas (Home ↔ Perfil ↔ Semana Gestacional) lê da
+     memória → instantâneo, sem re-fetch.
+   - Todas as telas trocaram `getUser()` (rede) por `getSession()` (lê o
+     token local, sem rede). As que **salvam** (data do parto, semana,
+     atualizar gestação) chamam `refresh()` depois pra manter o cache em dia.
+   - `Skeleton` (`src/components/Skeleton.tsx`) só aparece na primeiríssima
+     carga de quem ainda não tem nada no cache.
+   - Testado ponta a ponta: primeira carga mostra skeleton→dado, navegação
+     fica instantânea e reload completo hidrata na hora pelo localStorage.
 
 2. **Bolinha vermelha do sino é sempre fixa** — não reflete uma contagem
    real de não lidas, porque as notificações ainda não existem de verdade

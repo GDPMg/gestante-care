@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AppLayout from '../components/AppLayout'
-import { supabase } from '../lib/supabaseClient'
+import Skeleton from '../components/Skeleton'
+import { useUserData } from '../contexts/UserDataContext'
 import { ofertaDestaqueMock, proximaConsultaMock, proximoExameMock } from '../data/mock'
 
 function GestationRing({ semana }: { semana: number }) {
@@ -35,33 +35,20 @@ function GestationRing({ semana }: { semana: number }) {
 
 export default function Home() {
   const navigate = useNavigate()
-  const [primeiroNome, setPrimeiroNome] = useState('')
-  const [semanaAtual, setSemanaAtual] = useState<number | null>(null)
-
-  useEffect(() => {
-    async function carregarDados() {
-      const { data: userData } = await supabase.auth.getUser()
-      const userId = userData.user?.id
-      if (!userId) return
-
-      const [{ data: perfil }, { data: gestacional }] = await Promise.all([
-        supabase.from('perfis').select('nome_completo').eq('id', userId).single(),
-        supabase.from('perfil_gestacional').select('semana_informada').eq('usuario_id', userId).single(),
-      ])
-
-      if (perfil?.nome_completo) setPrimeiroNome(perfil.nome_completo.split(' ')[0])
-      if (gestacional?.semana_informada) setSemanaAtual(gestacional.semana_informada)
-    }
-
-    carregarDados()
-  }, [])
+  const { primeiroNome, semana: semanaAtual, loading } = useUserData()
 
   return (
     <AppLayout>
       <div className="flex items-center justify-between">
         <div>
           <p className="text-sm text-brand-muted">Bem-vinda de volta</p>
-          <h1 className="font-serif text-2xl text-brand-ink">Olá{primeiroNome && `, ${primeiroNome}`}</h1>
+          <h1 className="font-serif text-2xl text-brand-ink">
+            {loading && !primeiroNome ? (
+              <>Olá, <Skeleton className="h-6 w-28 align-middle" /></>
+            ) : (
+              <>Olá{primeiroNome && `, ${primeiroNome}`}</>
+            )}
+          </h1>
         </div>
         <button
           onClick={() => navigate('/notificacoes')}
@@ -73,7 +60,7 @@ export default function Home() {
       </div>
 
       <div className="flex flex-col gap-5 lg:grid lg:grid-cols-2 lg:gap-4">
-        {semanaAtual && (
+        {semanaAtual ? (
           <button
             onClick={() => navigate('/semana-gestacional')}
             className="flex items-center gap-4 rounded-3xl bg-brand-green-tint p-4 text-left"
@@ -87,6 +74,16 @@ export default function Home() {
               <path d="M9 6l6 6-6 6" />
             </svg>
           </button>
+        ) : (
+          loading && (
+            <div className="flex items-center gap-4 rounded-3xl bg-brand-green-tint p-4">
+              <Skeleton className="h-14 w-14 shrink-0 rounded-full" />
+              <div className="flex flex-1 flex-col gap-2">
+                <Skeleton className="h-3 w-24" />
+                <Skeleton className="h-4 w-40" />
+              </div>
+            </div>
+          )
         )}
 
         <button

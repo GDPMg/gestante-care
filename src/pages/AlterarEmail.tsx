@@ -16,8 +16,8 @@ export default function AlterarEmail() {
 
   useEffect(() => {
     async function carregarEmailAtual() {
-      const { data } = await supabase.auth.getUser()
-      if (data.user?.email) setEmailAtual(data.user.email)
+      const { data } = await supabase.auth.getSession()
+      if (data.session?.user?.email) setEmailAtual(data.session.user.email)
     }
     carregarEmailAtual()
   }, [])

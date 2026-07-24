@@ -27,7 +27,12 @@ dados.
 - `src/pages/` — uma tela por arquivo, nomes alinhados com a seção "Telas" do
   `PRODUCT_SPEC.md`.
 - `src/components/` — elementos reutilizáveis de UI (`Button`, `TextField`,
-  `SelectField`, `StepProgress`).
+  `SelectField`, `StepProgress`, `Skeleton`).
+- `src/contexts/` — `UserDataContext.tsx`: cache central dos dados da usuária
+  (nome, semana, DPP confirmada, status da gestação). Busca uma vez após o
+  login, guarda em memória + `localStorage` e revalida por trás
+  (stale-while-revalidate), pra a navegação entre telas ser instantânea e a
+  abertura do app não piscar vazia. As telas consomem via `useUserData()`.
 - `src/lib/` — `supabaseClient.ts` (cliente Supabase), `format.ts` (máscaras de
   CPF/telefone/data e cálculo de previsão de parto), `authErrors.ts` (tradução
   de erros do Supabase Auth para português).
