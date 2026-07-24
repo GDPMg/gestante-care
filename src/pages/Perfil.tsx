@@ -115,7 +115,10 @@ export default function Perfil() {
         </div>
       </section>
 
-      <button className="flex items-center justify-center gap-1.5 text-sm text-brand-muted">
+      <button
+        onClick={() => navigate('/perfil/atualizar-gestacao')}
+        className="flex items-center justify-center gap-1.5 text-sm text-brand-muted"
+      >
         <span aria-hidden>♡</span> Atualizar minha gestação
       </button>
 
